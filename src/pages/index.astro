@@ -9,10 +9,9 @@ import GSAPLogo from '../components/icons/GSAP.astro'
 <script>
   import gsap from 'gsap'
 
-  const containerDOM = document.querySelector('[data-gsap="container') as HTMLDivElement
-  const astroDOM = document.querySelector('[data-gsap="astro') as HTMLSpanElement
-  const tailwindcssDOM = document.querySelector('[data-gsap="tailwindcss') as HTMLSpanElement
-  const gsapDOM = document.querySelector('[data-gsap="gsap') as HTMLSpanElement
+  gsap.set('[data-gsap="container"]', {
+    opacity: 1,
+  })
 
   const tl = gsap.timeline({
     repeat: -1,
@@ -24,19 +23,19 @@ import GSAPLogo from '../components/icons/GSAP.astro'
     },
   })
 
-  tl.from(astroDOM, {
+  tl.from('[data-gsap="astro"]', {
     y: 50,
     ease: 'slow(0.7, 0.7, false)',
   })
-  tl.from(tailwindcssDOM, {
+  tl.from('[data-gsap="tailwindcss"]', {
     x: 50,
     ease: 'power4.out',
   })
-  tl.from(gsapDOM, {
+  tl.from('[data-gsap="gsap"]', {
     xPercent: 200,
     ease: 'bounce.out',
   })
-  tl.to(containerDOM, {
+  tl.to('[data-gsap="container"]', {
     y: -50,
     delay: 5,
   })
@@ -53,7 +52,10 @@ import GSAPLogo from '../components/icons/GSAP.astro'
 </script>
 
 <Layout title='Astro + TailwindCSS + GSAP'>
-  <div data-gsap='container' class='flex select-none items-center gap-x-4 text-6xl font-bold'>
+  <div
+    data-gsap='container'
+    class='flex select-none items-center gap-x-4 text-6xl font-bold opacity-0'
+  >
     <span data-gsap='astro' class='self-end'>
       <AstroLogo className='h-20 w-auto' />
     </span>
