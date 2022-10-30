@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Button from '../components/Button.astro'
+import AstroLogo from '../components/icons/Astro.astro'
+import TailwindCSSLogo from '../components/icons/TailwindCSS.astro'
+import GSAPLogo from '../components/icons/GSAP.astro'
+---
+
+<script>
+  import gsap from 'gsap'
+
+  const containerDOM = document.querySelector('[data-gsap="container') as HTMLDivElement
+  const astroDOM = document.querySelector('[data-gsap="astro') as HTMLSpanElement
+  const tailwindcssDOM = document.querySelector('[data-gsap="tailwindcss') as HTMLSpanElement
+  const gsapDOM = document.querySelector('[data-gsap="gsap') as HTMLSpanElement
+
+  const tl = gsap.timeline({
+    repeat: -1,
+    defaults: {
+      opacity: 0,
+      filter: 'blur(6px)',
+      duration: 1,
+      delay: 0.3,
+    },
+  })
+
+  tl.from(astroDOM, {
+    y: 50,
+    ease: 'slow(0.7, 0.7, false)',
+  })
+  tl.from(tailwindcssDOM, {
+    x: 50,
+    ease: 'power4.out',
+  })
+  tl.from(gsapDOM, {
+    xPercent: 200,
+    ease: 'bounce.out',
+  })
+  tl.to(containerDOM, {
+    y: -50,
+    delay: 5,
+  })
+
+  const btnAddEventListener = (selectors: string, callback: () => void) => {
+    const btn = document.querySelector(selectors) as HTMLButtonElement
+    btn.addEventListener('click', callback)
+  }
+
+  btnAddEventListener('[data-gsap="play()"]', () => tl.play())
+  btnAddEventListener('[data-gsap="pause()"]', () => tl.pause())
+  btnAddEventListener('[data-gsap="reverse()"]', () => tl.reverse())
+  btnAddEventListener('[data-gsap="restart()"]', () => tl.restart())
+</script>
+
+<Layout title='Astro + TailwindCSS + GSAP'>
+  <div data-gsap='container' class='flex select-none items-center gap-x-4 text-6xl font-bold'>
+    <span data-gsap='astro' class='self-end'>
+      <AstroLogo className='h-20 w-auto' />
+    </span>
+
+    <span data-gsap='tailwindcss' class='flex gap-x-4'>
+      <i>&nbsp;+&nbsp;</i>
+      <TailwindCSSLogo className='h-auto w-20' />
+      <p>Tailwind CSS</p>
+    </span>
+
+    <span data-gsap='gsap' class='flex gap-x-4'>
+      <i>&nbsp;+&nbsp;</i>
+      <GSAPLogo className='h-auto w-20' />
+      <p>GSAP</p>
+    </span>
+  </div>
+
+  <div class='flex gap-x-4'>
+    <Button method='play()'>play</Button>
+    <Button method='pause()'>pause</Button>
+    <Button method='reverse()'>reverse</Button>
+    <Button method='restart()'>restart</Button>
+  </div>
+</Layout>

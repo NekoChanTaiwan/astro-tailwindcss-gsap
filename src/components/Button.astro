@@ -1,0 +1,15 @@
+---
+export interface Props {
+  method: string
+}
+
+const { method } = Astro.props
+---
+
+<button
+  type='button'
+  data-gsap={method}
+  class='rounded-lg border-2 border-[#1a1a1a] bg-[#1a1a1a] py-2 px-5 text-lg transition-colors hover:border-[#ff5d01]'
+>
+  <slot />
+</button>
